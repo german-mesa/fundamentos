@@ -85,6 +85,8 @@ def crearHashtags(bbdd):
 
         bbdd[jugador]['descripcion'] = descripcion
 
+    print(bbdd)
+
 
 # Añadir partida en la BBDD
 def incluirPartida(bbdd, jugador: str, descripcion: str, partida: str, tiempo: float):
@@ -105,6 +107,9 @@ def creaBBDDJugadores(bbdd):
     incluirPartida(bbdd, "ana", "Soy ana y suelo jugara a MINECRAFT", "minecraft", 20.3)
     incluirPartida(bbdd, "ana", "Soy ana y suelo jugara a MINECRAFT", "minecraft", 22.3)
     incluirPartida(bbdd, "ana", "Soy ana y suelo jugara a MINECRAFT", "amongus", 22.3)
+
+    print(bbdd)
+
     return bbdd
 
 
@@ -112,20 +117,21 @@ def main():
     # Añadiendo jugadores al diccionario - 2 puntos
     jugadores = creaBBDDJugadores({})
 
-    # Juegos más popular - 3 puntos
-    print(f"El juego más popular es {obtenerRankingJuegos(jugadores)}")
-
     # Hastags - 2 puntos
     crearHashtags(jugadores)
-
-    # Ranking de jugadores - 3 puntos
-    print(f"Los mejores jugadores de AMONGUS son {obtenerRankingJugadores(jugadores, 'amongus', 3)}")
-    print(f"Los mejores jugadores de AMONGUS son {obtenerRankingJugadores(jugadores, 'amongus', 2)}")
 
     # ¿Ha jugado alguna vez al juego? - 2 puntos
     print(f"¿Ha jugado Juan al amongus alguna vez? {validarPartidaJugador(jugadores, 'juan', 'amongus')}")
     print(f"¿Ha jugado Juan al Garrys Mod alguna vez? {validarPartidaJugador(jugadores, 'juan', 'Garrys Mod')}")
     print(f"¿Ha jugado antonio al rdd alguna vez? {validarPartidaJugador(jugadores, 'antonio', 'rdd')}")
+
+    # Juegos más popular - 3 puntos
+    print(f"El juego más popular es {obtenerRankingJuegos(jugadores)}")
+
+    # Ranking de jugadores - 3 puntos
+    print(f"Los mejores jugadores de AMONGUS son {obtenerRankingJugadores(jugadores, 'amongus', 3)}")
+    print(f"Los mejores jugadores de AMONGUS son {obtenerRankingJugadores(jugadores, 'amongus', 2)}")
+
 
 
 if __name__ == '__main__':
