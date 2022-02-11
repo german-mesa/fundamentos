@@ -1,26 +1,14 @@
-jugadores = {
-    'Alan Turing': {
-        'descripcion': 'Soy Alan y mi juego preferido es MINECRAFT.',
-        'partidas': [('amongus', 12.5), ('minecraft', 24.2), ('minecraft', 28.2), ('supermario odissey', 45.5)]
-    },
-    'Sharon Lin': {
-        'descripcion': 'Me llamo Sharon y me gusta MINECRAFT y AMONGUS.',
-        'partidas': [('minecraft', 45.0), ('amongus', 10.2)]
-    }
-}
-
-
 # Partidas por jugador
-def obtenerPartidasJugador(jugador: str):
-    return jugadores[jugador].get('partidas')
+def obtenerPartidasJugador(bbdd, jugador: str):
+    return bbdd[jugador].get('partidas')
 
 
 # Todas las partidas jugadas por todos los jugadores
-def obtenerPartidas():
+def obtenerPartidas(bbdd):
     partidas = []
 
-    for jugador in jugadores:
-        partidas.extend(obtenerPartidasJugador(jugador))
+    for jugador in bbdd:
+        partidas.extend(obtenerPartidasJugador(bbdd, jugador))
 
     return partidas
 
@@ -37,19 +25,19 @@ def existePartida(juego: str, partidas):
 
 
 # Ha jugado el jugador al menos una vez
-def validarPartidaJugador(jugador: str, juego: str) -> bool:
-    if jugador in jugadores:
-        return existePartida(juego, obtenerPartidasJugador(jugador))
+def validarPartidaJugador(bbdd, jugador: str, juego: str) -> bool:
+    if jugador in bbdd:
+        return existePartida(juego, obtenerPartidasJugador(bbdd, jugador))
     else:
         return False
 
 
 # ¿Cuál es el juego más popular?
-def obtenerRankingJuegos():
+def obtenerRankingJuegos(bbdd):
     # Cuento los juegos en un diccionario
     ranking = {}
 
-    for partida in obtenerPartidas():
+    for partida in obtenerPartidas(bbdd):
         if partida[0] in ranking:  # Como esta en la coleccion le añado uno mas
             ranking[partida[0]] += 1
         else:  # No esta en la coleccion
@@ -63,11 +51,11 @@ def obtenerRankingJuegos():
 
 
 # Obtiene el ranking de los `m` mejores jugadores del juego
-def obtenerRankingJugadores(juego: str, m: int) -> list:
+def obtenerRankingJugadores(bbdd, juego: str, m: int) -> list:
     ranking = {}
 
-    for jugador in jugadores:
-        for partida in obtenerPartidasJugador(jugador):
+    for jugador in bbdd:
+        for partida in obtenerPartidasJugador(bbdd, jugador):
             if partida[0] == juego:
                 if jugador in ranking:
                     if ranking[jugador] > partida[1]:
@@ -80,61 +68,64 @@ def obtenerRankingJugadores(juego: str, m: int) -> list:
     ranking.sort(key=lambda x: x[1])
 
     if m > len(ranking):
-        m = len(ranking) - 1
+        m = len(ranking)
 
     return ranking[:m]
 
 
 # Añadir hastags en la descripción de cada jugador
-def crearHashtags():
-    for jugador in jugadores:
+def crearHashtags(bbdd):
+    for jugador in bbdd:
         descripcion = ""
 
-        for word in str.split(jugadores[jugador]['descripcion']):
+        for word in str.split(bbdd[jugador]['descripcion']):
             if str.isupper(word):
                 descripcion += "#"
             descripcion += word + " "
 
-        jugadores[jugador]['descripcion'] = descripcion
+        bbdd[jugador]['descripcion'] = descripcion
 
 
 # Añadir partida en la BBDD
-def incluirPartida(jugador: str, descripcion: str, partida: str, tiempo: float):
-    if jugador in jugadores:  # Update existing player
-        jugadores[jugador]['descripcion'] = descripcion
-        jugadores[jugador]['partidas'].append((partida, tiempo))
+def incluirPartida(bbdd, jugador: str, descripcion: str, partida: str, tiempo: float):
+    if jugador in bbdd:  # Update existing player
+        bbdd[jugador]['descripcion'] = descripcion
+        bbdd[jugador]['partidas'].append((partida, tiempo))
 
     else:  # Add a new player
-        jugadores[jugador] = {'descripcion': descripcion, 'partidas': [(partida, tiempo)]}
+        bbdd[jugador] = {'descripcion': descripcion, 'partidas': [(partida, tiempo)]}
 
 
 # Incluir partidas en la BBDD
-def creaBBDDJugadores():
-    incluirPartida('Alan Turing', 'Me llamo Alan y me gusta mucho MINECRAFT y AMONGUS', 'amongus', 12.5)
-    incluirPartida('Mikhail Tal', 'Soy Mikhail y suelo jugara a MINECRAFT', 'minecraft', 20.3)
-    incluirPartida('Mikhail Tal', 'Soy Mikhail y suelo jugara a MINECRAFT', 'minecraft', 22.3)
-    incluirPartida('Mikhail Tal', 'Soy Mikhail y suelo jugara a MINECRAFT', 'amongus', 22.3)
+def creaBBDDJugadores(bbdd):
+    incluirPartida(bbdd, "juan", "Me llamo juan y me gusta MINECRAFT y AMONGUS", "portal2", 45.0)
+    incluirPartida(bbdd, "juan", "Me llamo Juan y me gusta mucho MINECRAFT y AMONGUS", "amongus", 10.2)
+    incluirPartida(bbdd, "juan", "Me llamo Juan y me gusta mucho MINECRAFT y AMONGUS", "amongus", 100.2)
+    incluirPartida(bbdd, "pepe", "Soy pepe y mi juego preferido es MINECRAFT", "amongus", 12.5)
+    incluirPartida(bbdd, "ana", "Soy ana y suelo jugara a MINECRAFT", "minecraft", 20.3)
+    incluirPartida(bbdd, "ana", "Soy ana y suelo jugara a MINECRAFT", "minecraft", 22.3)
+    incluirPartida(bbdd, "ana", "Soy ana y suelo jugara a MINECRAFT", "amongus", 22.3)
+    return bbdd
 
 
 def main():
     # Añadiendo jugadores al diccionario - 2 puntos
-    creaBBDDJugadores()
+    jugadores = creaBBDDJugadores({})
 
     # Juegos más popular - 3 puntos
-    print(f"El juego más popular es {obtenerRankingJuegos()}")
+    print(f"El juego más popular es {obtenerRankingJuegos(jugadores)}")
 
     # Hastags - 2 puntos
-    crearHashtags()
+    crearHashtags(jugadores)
 
     # Ranking de jugadores - 3 puntos
-    print(f"Los mejores jugadores de MINECRAFT son {obtenerRankingJugadores('minecraft', 3)}")
+    print(f"Los mejores jugadores de AMONGUS son {obtenerRankingJugadores(jugadores, 'amongus', 3)}")
+    print(f"Los mejores jugadores de AMONGUS son {obtenerRankingJugadores(jugadores, 'amongus', 2)}")
 
     # ¿Ha jugado alguna vez al juego? - 2 puntos
-    print(
-        f"¿Ha jugado Mikhail Tal al MINECRAFT alguna vez? {validarPartidaJugador('Mikhail Tal', 'minecraft')}")  # True
-    print(f"¿Ha jugado Mikhail Tal al TETO alguna vez? {validarPartidaJugador('Mikhail Tal', 'teto')}")  # False
-    print(
-        f"¿Ha jugado Mikhail Tato al MINECRAFT alguna vez? {validarPartidaJugador('Mikhail Tato', 'minecraft')}")  # False
+    print(f"¿Ha jugado Juan al amongus alguna vez? {validarPartidaJugador(jugadores, 'juan', 'amongus')}")
+    print(f"¿Ha jugado Juan al Garrys Mod alguna vez? {validarPartidaJugador(jugadores, 'juan', 'Garrys Mod')}")
+    print(f"¿Ha jugado antonio al rdd alguna vez? {validarPartidaJugador(jugadores, 'antonio', 'rdd')}")
 
 
 if __name__ == '__main__':
