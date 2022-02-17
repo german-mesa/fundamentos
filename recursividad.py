@@ -14,7 +14,7 @@ def factorial(value):
         return value * factorial(value - 1)
 
 
-# Calcular la serie de fibonacci - calcula el elemento n sumando los dos anteriores n-1 + n-2
+# Calcular la serie de Fibonacci - calcula el elemento n sumando los dos anteriores n-1 + n-2
 def fibonacci(value):
     if value == 0:
         return 0
@@ -25,14 +25,14 @@ def fibonacci(value):
 
 
 # Sumatorio de los componentes de una lista
-def sumatorioLista(lista, size):
-    if size == 0:
+def sumatorioLista(lista):
+    if len(lista) == 0:
         return 0
     else:
-        return lista[size - 1] + sumatorioLista(lista, size - 1)
+        return lista[0] + sumatorioLista(lista[1:])
 
 
-# Maximo de los componentes de una lista
+# Máximo de los componentes de una lista
 def maximoLista(lista):
     if len(lista) == 1:
         return lista[0]
@@ -41,7 +41,7 @@ def maximoLista(lista):
         return max(lista[0], maximoLista(lista[1:]))
 
 
-# Minimo de los componentes de una lista
+# Mínimo de los componentes de una lista
 def minimoLista(lista):
     if len(lista) == 1:
         return lista[0]
@@ -56,7 +56,7 @@ if __name__ == '__main__':
 
     numeros = [2, 3, 5, 2, 11, 1, 7]
     print(
-        f"La suma de los elementos de la lista [2, 3, 5, 2, 11, 1, 7] es {sumatorioLista(numeros, len(numeros))} = {sum(numeros)}")
+        f"La suma de los elementos de la lista [2, 3, 5, 2, 11, 1, 7] es {sumatorioLista(numeros)} = {sum(numeros)}")
 
     print(
         f"El máximo de los elementos de la lista [2, 3, 5, 2, 11, 1, 7] es {maximoLista(numeros)} = {max(numeros)}")
