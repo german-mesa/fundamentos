@@ -6,15 +6,6 @@ empleados = {
     }
 }
 
-def edad_maxima():
-    maximo = 0
-
-    for _ , item in enumerate(empleados):
-        if empleados[item]['edad'] > maximo:
-            maximo = empleados[item]['edad']
-
-    return maximo
-
 def contar_edad():
     grupo = {}
 
@@ -26,9 +17,19 @@ def contar_edad():
 
     return grupo
 
-def ordenar_edad(reverse=False):
-    return {k: v for k, v in sorted(empleados.items(), key=lambda item: item[1]['salario'], reverse=reverse)}
+def edad_maxima():
+    empleados_sorted = sorted(empleados, key=get_edad, reverse=True)
+    return empleados[empleados_sorted[0]]['edad']
 
+def salario_maximo():
+    empleados_sorted = sorted(empleados, key=get_salario, reverse=True)
+    return empleados[empleados_sorted[0]]['salario']
+
+def get_edad(empleado):
+    return empleados[empleado]['edad']
+
+def get_salario(empleado):
+    return empleados[empleado]['salario']
 
 def main():
     # Vaciar el diccionario
@@ -44,28 +45,42 @@ def main():
     empleados.update({'John Hopkins':{'edad': 30}})
 
     # Actualizar edad y salario
-    empleados['John Hopkins']['salario'] = 2000
+    empleados['John Hopkins']['salario'] = 20000
 
     # Eliminar un registro de un diccionario 
     empleados.pop('Sharon Lin', None)
  
-    # Loop sobre un diccionario
-    for index, item in empleados.items():
-        print(f'{index} - {item}')
+    print(f'\nDiccionario tras meter y modificar datos:\n {empleados}')
 
+    # Ordenar por clave
+    empleados_sorted = sorted(empleados)
+    print(f'\nOrdenando diccionario por clave:\n {empleados_sorted}')
+
+    empleados_sorted = sorted(empleados, reverse=True)
+    print(f'\nOrdenando diccionario inversamente por clave:\n {empleados_sorted}')
+
+    # Algunas cosas que pueden hacerse con ordenaciones
+    print(f'\nAlgunas cosas que pueden hacerse con ordenaciones')
+    print(f'La edad máxima de la plantilla es {edad_maxima()}')
+    print(f'El salario máximo de la plantilla es {salario_maximo()}')
+
+    # Loop sobre un diccionario
+    print(f'\nLoop en diccionario utilizando enumerate()')
     for index, item in enumerate(empleados):
         print(f'{index} - {item}')
 
+    print(f'\nLoop en diccionario utilizando items()')
+    for index, item in empleados.items():
+        print(f'{index} - {item}')
+
+    print(f'\nLoop en diccionario utilizando items()')
     for item in empleados.items():
         print(f'{item}')
 
     # Algunas cosas que pueden hacerse con loops
-    print(f'La edad máxima de la plantilla es {edad_maxima()}')
+    print(f'\nAlgunas cosas que pueden hacerse con loops')
     print(f'Los grupos de edad son {contar_edad()}')
 
-    # Cosas que pueden hacerse con lambdas
-    print(f'El diccionario puede ordenarse por edad {ordenar_edad()}')
-    print(f'El diccionario puede ordenarse por edad inversa {ordenar_edad(reverse=True)}')
 
 if __name__ == '__main__':
     main()
