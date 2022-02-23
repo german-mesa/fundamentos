@@ -17,14 +17,6 @@ def contar_edad():
 
     return grupo
 
-def edad_maxima():
-    empleados_sorted = sorted(empleados, key=get_edad, reverse=True)
-    return empleados[empleados_sorted[0]]['edad']
-
-def salario_maximo():
-    empleados_sorted = sorted(empleados, key=get_salario, reverse=True)
-    return empleados[empleados_sorted[0]]['salario']
-
 def get_edad(empleado):
     return empleados[empleado]['edad']
 
@@ -61,8 +53,12 @@ def main():
 
     # Algunas cosas que pueden hacerse con ordenaciones
     print(f'\nAlgunas cosas que pueden hacerse con ordenaciones')
-    print(f'La edad máxima de la plantilla es {edad_maxima()}')
-    print(f'El salario máximo de la plantilla es {salario_maximo()}')
+    
+    empleados_sorted = sorted(empleados, key=get_edad, reverse=True)
+    print(f'La edad máxima de la plantilla es {get_edad(empleados_sorted[0])}')
+
+    empleados_sorted = sorted(empleados, key=get_salario, reverse=True)
+    print(f'El salario máximo de la plantilla es {get_salario(empleados_sorted[0])}')
 
     # Loop sobre un diccionario
     print(f'\nLoop en diccionario utilizando enumerate()')
