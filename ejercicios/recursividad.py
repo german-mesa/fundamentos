@@ -18,7 +18,7 @@ def factorial(value):
 def fibonacci(value):
     if value == 0:
         return 0
-    if value == 1:
+    elif value == 1:
         return 1
     else:
         return fibonacci(value - 1) + fibonacci(value - 2)
@@ -50,9 +50,13 @@ def minimoLista(lista):
         return min(lista[0], minimoLista(lista[1:]))
 
 
-if __name__ == '__main__':
+if __name__ == '__main__':    
     print(f"El sumatorio de 5 es {sumatorio(5)}")  # 15
     print(f"El factorial de 5 es {factorial(5)}")  # 120
+
+    print(f"El número de Fibonacci de 0 es {fibonacci(0)}")  # 1
+    print(f"El número de Fibonacci de 1 es {fibonacci(1)}")  # 1
+    print(f"El número de Fibonacci de 10 es {fibonacci(10)}")  # 55
 
     numeros = [2, 3, 5, 2, 11, 1, 7]
     print(

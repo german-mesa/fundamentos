@@ -1,10 +1,30 @@
-from asyncio import SendfileNotAvailableError
+from collections import Counter
 
+juegos = [('amongus', 12.5), ('minecraft', 84.2), ('minecraft', 28.2), ('supermario odissey', 45.5), ('minecraft', 13.2)]
 
-juegos = [('amongus', 12.5), ('minecraft', 24.2), ('minecraft', 28.2), ('supermario odissey', 45.5)]
-
-def get_duracion(juego):
+def get_tiempo(juego):
     return juego[1]
+
+def get_popularity():
+    ranking = get_ranking()
+    
+    return max(ranking, key=ranking.get)  
+
+
+def get_ranking():
+    # Compongo un diccionario acumulando las partidas
+    ranking = {}
+
+    for partida in juegos:
+        if partida[0] in ranking:               # Como esta en el diccionario le añado uno mas
+            ranking[partida[0]] += 1
+        else:                                   # No esta en el diccionario
+            ranking[partida[0]] = 1
+
+    # Ordenar un diccionario por valor
+    sorted_ranking =dict(sorted(ranking.items(), key = lambda x: x[1], reverse = True))
+
+    return sorted_ranking
 
 def main():
     # Añadir un registro a una lista
@@ -15,20 +35,24 @@ def main():
 
     # Ordenar por clave
     sorted_juegos = sorted(juegos)
-    print(f'Juegos ordenados por nombre {sorted_juegos}')
+    print(f'Juegos ordenados por nombre - {sorted_juegos}')
 
-    sorted_juegos = sorted(juegos, key=get_duracion)
-    print(f'Juegos ordenados por duración {sorted_juegos}')
+    sorted_juegos = sorted(juegos, key=get_tiempo)
+    print(f'Juegos ordenados por duración - {sorted_juegos}')
     
-    # Loop sobre una lista
-    print(f'\nLoop en diccionario utilizando enumerate() {max(sorted_juegos)}')
+    # Encontrar max y min de una lista de tuples - elegante
+    print(f'\nJuego con mayor duración - {max(juegos,key=lambda item:item[1])}')
+    print(f'\nJuego con menor duración - {min(juegos,key=lambda item:item[1])}')
 
-    print(f'\nLoop en diccionario utilizando items()')
+    # Encontrar juego más popular - función
+    print(f'\nRanking de juegos (función) - {get_ranking()}')
+    print(f'\nJuego más popular (función) - {get_popularity()}')
 
-
-    # Algunas cosas que pueden hacerse con loops
-    print(f'\nAlgunas cosas que pueden hacerse con loops')
+    # Encontrar 3 juegos más populares - librería
+    counts = Counter(x[0] for x in juegos)
+    print(f'\nJuego más popular (librería) - {counts.most_common(3)}')
 
 
 if __name__ == '__main__':
     main()
+
