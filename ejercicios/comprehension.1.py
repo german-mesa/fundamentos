@@ -4,7 +4,7 @@ import numpy as np
 
 def main():
     # Lists
-    numbers = [49, 64, 81, 100,121]
+    numbers = [49, 64, 81, 100, 121]
 
     # Utilizando map
     sqrt_numbers = list(map(math.sqrt, numbers))

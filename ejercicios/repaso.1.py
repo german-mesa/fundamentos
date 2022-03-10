@@ -9,6 +9,10 @@ def cuantos_candidatos(lista_jugadores):
 
     return resultado
 
+def cuantos_candidatos_comprehensions(lista_jugadores):
+    resultado = [jugador for jugador in lista_jugadores if jugador.get('goles') > 20 and jugador.get('posicion') == 'delantero']
+    return len(resultado)
+
 
 def cuantos_candidatos_recursiva(lista_jugadores):
     if len(lista_jugadores) == 0:
@@ -61,6 +65,7 @@ def main():
 
     # jugadores candidatos
     print(f'Hay {cuantos_candidatos(jugadores)} candidatos')
+    print(f'Hay {cuantos_candidatos_comprehensions(jugadores)} candidatos (comprehensions)')
     print(f'Hay {cuantos_candidatos_recursiva(jugadores)} candidatos (recursiva)')
 
     # equipos con algún candidato
