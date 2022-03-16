@@ -35,14 +35,24 @@ def quick_sort(lista):
 
 def selection_sort(lista):
     for i in range(0, len(lista)-1):
-        valor_min = i
+        index_min = i
 
         for j in range(i+1, len(lista)):
-            if lista[j] < lista[valor_min]:
+            if lista[j] < lista[index_min]:
                 valor_min = j
 
         if valor_min != i:
-            lista[i], lista[valor_min] = lista[valor_min], lista[i] 
+            lista[i], lista[index_min] = lista[index_min], lista[i] 
+
+    return lista
+
+# Utilizar la funcion min() mientras vamos haciendo el loop
+def selection_sort_min(lista):
+    for i in range(0, len(lista)):
+        valor_min = min(lista[i:])
+        index_min = lista.index(valor_min)
+
+        lista[i], lista[index_min] = lista[index_min], lista[i] 
 
     return lista
 
@@ -63,6 +73,9 @@ def main():
     lista = [3, 7, 5, 4, 8, 9, 12, 11, 24]
     print(f'La lista ordenada con selection sort es {selection_sort(lista)}')
 
+    # Ordeno con algoritmo selection sort
+    lista = [3, 7, 5, 4, 8, 9, 12, 11, 24]
+    print(f'La lista ordenada con selection sort con la funcion min es {selection_sort_min(lista)}')
 
 if __name__ == '__main__':
     main()
