@@ -28,68 +28,60 @@ def classic_fibonacci(limite):
     return numeros
 
 
-# Secuencia de Fibonacci midiendo tiempos
-def secuencia_clasica_fibonacci(limite):
-    print("Secuencia de Fibonacci - Classic approach")
-
-    comienzo = time.time()
-
-    resultado = classic_fibonacci(limite)
-
-    for i in resultado:
-        pass 
-
-    final = time.time() - comienzo
-
-    print(f'Tiempo transcurrido: {final}')
-
-
-# Secuencia de Fibonacci midiendo tiempos
-def secuencia_generator_fibonacci(limite):
-    print("Secuencia de Fibonacci - Generator approach")
-
-    contador = 0
-    comienzo = time.time()
-
-    for i in generator_fibonacci():
-        if contador > limite:
-            break
-
-        contador += 1
-
-    final = time.time() - comienzo
-
-    print(f'Tiempo transcurrido: {final}')
-
-# Secuencia de Fibonacci pares midiendo tiempos
-def secuencia_generator_fibonacci_pares(limite):
-    print("Números pares en una secuencia de Fibonacci - Generator approach")
-
-    contador = 0
-    comienzo = time.time()
-
-    for i in generator_pares(generator_fibonacci()):
-        if contador > limite:
-            break
-
-        contador += 1
-
-    final = time.time() - comienzo
-
-    print(f'Tiempo transcurrido: {final}')
-
-
 def main():
-    numero = 1000000
+    #
+    # Ejemplo 1 - Cálculo de la secuencia de Fibonacci
+    #
 
-    # Calculo Fibonacci hasta que pasa de un valor máximo
-    # secuencia_clasica_fibonacci(numero)
+    # Número de valores en la secuencia
+    numero = 10
+    print(f'Ejemplo 1 - Cálculo de la secuencia de Fibonacci', end='\n')
+
+    # Calculo Fibonacci
+    print('\nCalculo la secuencia de Fibonacci')
+    secuencia_classic = classic_fibonacci(numero)
+    print(*secuencia_classic, end='\n')
 
     # Idem utilizando generator para no consumir tanta memoria
-    secuencia_generator_fibonacci(numero)
+    print('\nIdem utilizando generator')
+    for idx, item in enumerate(generator_fibonacci()):
+        if idx == numero:
+            break
 
-    # Encauzo la salida de un generador a otro
-    secuencia_generator_fibonacci_pares(numero)
+        print(item, end=',')
+    
+    print('\nFin del ejemplo 1')
+
+    #
+    # Ejemplo 2 - Cálculo de la secuencia de Fibonacci para números grandes
+    #
+
+    # Número de valores en la secuencia
+    numero = 1000
+    print(f'\nEjemplo 2 - Veamos el tiempo que tarda el generator para números grandes {numero}', end='\n')
+
+
+    # Veamos el tiempo que tarda el clásico para números grandes
+    comienzo = time.time()
+    secuencia_classic = classic_fibonacci(numero)
+    print(f'\nCalculo la secuencia de Fibonacci de forma clásica para {numero} numeros en {time.time() - comienzo}')
+
+    # Veamos el tiempo que tarda el generator para números grandes
+    comienzo = time.time()
+    for idx, item in enumerate(generator_fibonacci()):
+        if idx == numero:
+            break
+    print(f'\nCalculo la secuencia de Fibonacci con el generador para {numero} numeros en {time.time() - comienzo}')
+
+
+
+    # Ejemplo 3 - Encauzo la salida de un generador a otro
+    print('\nEncauzo la salida de un generador a otro')
+    for idx, item in enumerate(generator_pares(generator_fibonacci())):
+        if idx > 5:
+            break
+    
+        print(item, end=',')
 
 
 if __name__ == '__main__':
