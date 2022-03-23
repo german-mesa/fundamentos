@@ -1,3 +1,5 @@
+# Cómo funciona el algoritmo
+# https://www.youtube.com/watch?v=g_xesqdQqvA&t=231s
 def bubble_sort(lista):
     ordenada = False
     tamano = len(lista) - 1
@@ -12,7 +14,8 @@ def bubble_sort(lista):
         
     return lista
 
-
+# Cómo funciona el algoritmo
+# https://www.youtube.com/watch?v=kFeXwkgnQ9U
 def quick_sort(lista):
     tamano = len(lista)
 
@@ -32,7 +35,8 @@ def quick_sort(lista):
             
     return quick_sort(lista_menor) + [pivot] + quick_sort(lista_mayor)
 
-
+# Cómo funciona el algoritmo
+# https://www.youtube.com/watch?v=4CykZVqBuCw
 def selection_sort(lista):
     for i in range(0, len(lista)-1):
         index_min = i
@@ -56,7 +60,8 @@ def selection_sort_min(lista):
 
     return lista
 
-
+# Cómo funciona el algoritmo
+# https://www.youtube.com/watch?v=byHi41L9vTM&t=276s
 def insertion_sort(lista):
     for i in range(1, len(lista)):
         elemento = lista[i]
