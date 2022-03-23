@@ -39,9 +39,9 @@ def selection_sort(lista):
 
         for j in range(i+1, len(lista)):
             if lista[j] < lista[index_min]:
-                valor_min = j
+                index_min = j
 
-        if valor_min != i:
+        if index_min != i:
             lista[i], lista[index_min] = lista[index_min], lista[i] 
 
     return lista
@@ -53,6 +53,17 @@ def selection_sort_min(lista):
         index_min = lista.index(valor_min)
 
         lista[i], lista[index_min] = lista[index_min], lista[i] 
+
+    return lista
+
+
+def insertion_sort(lista):
+    for i in range(1, len(lista)):
+        elemento = lista[i]
+  
+        while lista[i-1]>elemento and i>0:
+            lista[i], lista[i-1] = lista[i-1], lista[i]
+            i -= 1
 
     return lista
 
@@ -76,6 +87,10 @@ def main():
     # Ordeno con algoritmo selection sort
     lista = [3, 7, 5, 4, 8, 9, 12, 11, 24]
     print(f'La lista ordenada con selection sort con la funcion min es {selection_sort_min(lista)}')
+
+    # Ordeno con algoritmo insertion sort
+    lista = [3, 7, 5, 4, 8, 9, 12, 11, 24]
+    print(f'La lista ordenada con insertion sort es {insertion_sort(lista)}')
 
 if __name__ == '__main__':
     main()
